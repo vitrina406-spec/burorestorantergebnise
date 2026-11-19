@@ -239,7 +239,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* ---------- проєкти: тільки справжні заклади ---------- */
 .pj-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:clamp(30px,4vw,48px)}
-.track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1100px) and (min-width:821px){.track{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .pj{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;background:var(--card);margin:0}
 .pj>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .pj:hover>img{transform:scale(1.05)}
@@ -477,6 +478,17 @@ html.mo .fi.rv:not(.in) s::after{transform:scaleX(0)}
 .cq.qt-on .w.lit{opacity:1}
 .cq footer{margin-top:12px;font:500 14.5px/1.4 var(--fb);color:var(--mute)}
 .cq footer b{color:var(--text);font-weight:700}
+.chef-l{position:relative;display:grid;align-content:start;min-width:0}
+/* матове скло: картка з цитатою наїжджає на низ фото й розмиває його */
+.cq.glass{position:relative;z-index:2;margin:-96px 22px 0 -10px;padding:24px 26px 22px;border:1px solid rgba(255,255,255,.16);border-left:4px solid var(--red);border-radius:22px;background:linear-gradient(140deg,rgba(255,255,255,.12),rgba(255,255,255,.03) 55%),rgba(22,19,17,.55);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 24px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+.cq.glass p{font-size:clamp(22px,1.9vw,28px);line-height:1.2}
+.cq.glass footer{display:grid;gap:2px;margin-top:14px}
+.cq.glass footer b{font:800 20px/1.1 var(--fd);text-transform:uppercase}
+.cq.glass footer span{font-size:13.5px;color:#C9C0B6}
+.cq.glass.qt-on .w{opacity:.38}
+.cq.glass.qt-on .w.lit{opacity:1}
+@media (max-width:900px){.chef-l{max-width:460px}.cq.glass{margin:-80px 14px 0 -6px}}
+@media (max-width:560px){.cq.glass{margin:-70px 10px 0 0;padding:20px 20px 18px}.cq.glass p{font-size:22px}}
 /* ---------- шеф: продаємо знання й уміння ---------- */
 .chef{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,5vw,80px);align-items:center}
 .chef-ph{position:relative;margin:0}
@@ -746,7 +758,7 @@ html.fscroll .hint .s{display:inline}
 html.fscroll #for{overflow-x:clip}
 html.fscroll .who .flip.rv{opacity:1;translate:none;scale:none;animation:none}
 html.fscroll .who .flip{will-change:transform,opacity}
-html.fscroll .who .flip-in{transition:none}
+html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
 @media (max-width:760px){.flip-in{min-height:400px}.who{gap:16px}}
 /* формати на вузькому екрані: опис відкривається у вікні після вибору ніші */
 #fxBld{scroll-margin-top:96px}
@@ -920,6 +932,7 @@ html.fscroll .who .flip-in{transition:none}
       <figure class="pj rv" data-venue="greystone"><img src="img/greystone.jpg" alt="Ресторан Grey Stone ввечері" loading="lazy"><figcaption><span class="ptag">Ресторан</span><h3>Grey Stone</h3><p>Софіївська Борщагівка</p></figcaption></figure>
       <figure class="pj rv" data-venue="gsp"><img src="img/gsp.jpg" alt="Заклад «Готові страви поруч»" loading="lazy"><figcaption><span class="ptag">Кулінарія</span><h3>Готові страви поруч</h3><p>корисні домашні страви</p></figcaption></figure>
       <figure class="pj rv" data-venue="eatit"><img src="img/eatit.jpg" alt="Кафе Eat it" loading="lazy"><figcaption><span class="ptag">Кафе при ЖК</span><h3>Eat it</h3><p>молодіжний формат</p></figcaption></figure>
+      <figure class="pj rv" data-venue="redcat"><img src="img/redcat.webp" alt="Пивний бар Red Cat Pub у фудкорті, команда за стійкою" loading="lazy"><figcaption><span class="ptag">Паб</span><h3>Red Cat Pub</h3><p>пивний бар у фудкорті</p></figcaption></figure>
     </div>
     <div class="pj-more rv"><p>А також три пивні ресторани мережі Red Cat у Харкові, оновлення мережі «Пивобанк» і понад десяток стрітфуд-точок, кав’ярень, піцерій і суші.</p></div>
   </div>
@@ -937,18 +950,18 @@ html.fscroll .who .flip-in{transition:none}
     <div class="svc-side">
       <div class="meter"><b><span class="svcN">0</span><small>/16</small></b><span>задач уже закрито</span><div class="bar"><i class="svcBar"></i></div></div>
       <div class="svis">
-        <div class="vl on"><img src="img/stage-1.webp" alt="Порожнє приміщення до старту" loading="lazy"><span class="cap">Приміщення до старту</span></div>
+        <div class="vl on"><img src="img/design-start.webp" alt="Порожнє приміщення до старту" loading="lazy"><span class="cap">Приміщення до старту</span></div>
         <div class="vl"><svg id="blueprint" role="img" aria-label="Ізометричний план закладу: кухня, бар і зал"></svg><span class="cap">Дизайн-проєкт залу й кухні</span></div>
         <div class="vl split"><div class="vwrap"><video id="kv" muted loop playsinline preload="none" poster="media/kitchen-poster.jpg" src="media/kitchen.mp4" aria-label="Відео кухні перед відкриттям"></video></div><div class="ph2"><img src="img/kitchen-1.webp" alt="Монтаж кухні" loading="lazy"><img src="img/kitchen-2.webp" alt="Кухня в роботі" loading="lazy"></div><span class="cap">Кухня перед відкриттям і в роботі</span></div>
-        <div class="vl"><img src="img/stage-5.webp" alt="Готовий заклад" loading="lazy"><span class="cap">Заклад відкрито</span></div>
+        <div class="vl"><img src="img/design-end.webp" alt="Готовий заклад" loading="lazy"><span class="cap">Заклад відкрито</span></div>
       </div>
     </div>
     <div class="svc-list">
       <div class="meter m"><b><span class="svcN">0</span><small>/16</small></b><span>задач уже закрито</span><div class="bar"><i class="svcBar"></i></div></div>
-      <div class="sgrp" data-g="0"><h3>Місце й цифри<span>01–04</span></h3><div class="sg-img"><img src="img/stage-1.webp" alt="Порожнє приміщення до старту" loading="lazy"></div><ul><li class="task"><span class="ck">01<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Аналіз приміщення й локації</b><span>трафік, аудиторія, конкуренти поруч</span></div></li><li class="task"><span class="ck">02<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Формат під приміщення й бюджет</b><span>що відкрити саме в цьому місці</span></div></li><li class="task"><span class="ck">03<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Бізнес-план і прорахунок</b><span>інвестиції, собівартість, окупність</span></div></li><li class="task"><span class="ck">04<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Назва й концепція</b><span>ідея, стиль і позиціонування закладу</span></div></li></ul></div>
+      <div class="sgrp" data-g="0"><h3>Місце й цифри<span>01–04</span></h3><div class="sg-img"><img src="img/design-start.webp" alt="Порожнє приміщення до старту" loading="lazy"></div><ul><li class="task"><span class="ck">01<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Аналіз приміщення й локації</b><span>трафік, аудиторія, конкуренти поруч</span></div></li><li class="task"><span class="ck">02<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Формат під приміщення й бюджет</b><span>що відкрити саме в цьому місці</span></div></li><li class="task"><span class="ck">03<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Бізнес-план і прорахунок</b><span>інвестиції, собівартість, окупність</span></div></li><li class="task"><span class="ck">04<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Назва й концепція</b><span>ідея, стиль і позиціонування закладу</span></div></li></ul></div>
       <div class="sgrp" data-g="1"><h3>Простір<span>05–08</span></h3><div class="sg-img"><svg id="blueprintM" role="img" aria-label="План закладу: кухня, бар і зал"></svg></div><ul><li class="task"><span class="ck">05<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Дизайн-проєкт залу</b><span>планування, меблі, світло</span></div></li><li class="task"><span class="ck">06<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Планування кухні</b><span>цехи й обладнання під ваше меню</span></div></li><li class="task"><span class="ck">07<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Контроль ремонту</b><span>підрядники, терміни, якість</span></div></li><li class="task"><span class="ck">08<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Обладнання й постачальники</b><span>під бюджет: ваші або перевірені партнери</span></div></li></ul></div>
       <div class="sgrp" data-g="2"><h3>Кухня й команда<span>09–12</span></h3><div class="sg-img two"><img src="img/kitchen-1.webp" alt="Монтаж кухні" loading="lazy"><img src="img/kitchen-2.webp" alt="Кухня в роботі" loading="lazy"></div><ul><li class="task"><span class="ck">09<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Меню й техкарти</b><span>страви з правильною собівартістю</span></div></li><li class="task"><span class="ck">10<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Підбір і навчання персоналу</b><span>кухня й зал готові до першого гостя</span></div></li><li class="task"><span class="ck">11<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Упаковка й уніформа</b><span>фірмовий стиль у деталях</span></div></li><li class="task"><span class="ck">12<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Документи для відкриття</b><span>дозволи, потрібні для старту роботи</span></div></li></ul></div>
-      <div class="sgrp" data-g="3"><h3>Запуск<span>13–16</span></h3><div class="sg-img"><img src="img/stage-5.webp" alt="Готовий заклад" loading="lazy"></div><ul><li class="task"><span class="ck">13<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Каса й автоматизація</b><span>облік, склад, програма для кухні</span></div></li><li class="task"><span class="ck">14<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Просування до відкриття</b><span>соцмережі й анонси до старту</span></div></li><li class="task"><span class="ck">15<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Відкриття разом із шефом</b><span>перший день на кухні поруч із командою</span></div></li><li class="task"><span class="ck">16<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Місяць супроводу</b><span>налагодження процесів і корекція меню</span></div></li></ul></div>
+      <div class="sgrp" data-g="3"><h3>Запуск<span>13–16</span></h3><div class="sg-img"><img src="img/design-end.webp" alt="Готовий заклад" loading="lazy"></div><ul><li class="task"><span class="ck">13<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Каса й автоматизація</b><span>облік, склад, програма для кухні</span></div></li><li class="task"><span class="ck">14<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Просування до відкриття</b><span>соцмережі й анонси до старту</span></div></li><li class="task"><span class="ck">15<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Відкриття разом із шефом</b><span>перший день на кухні поруч із командою</span></div></li><li class="task"><span class="ck">16<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Місяць супроводу</b><span>налагодження процесів і корекція меню</span></div></li></ul></div>
       <div class="svc-foot rv">
         <p>Не знаєте, що з цього потрібно саме вам? <b>На консультації шеф скаже чесно</b>, без зайвих послуг.</p>
         <button class="btn sm" type="button" data-consult>Консультація<i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
@@ -1023,12 +1036,14 @@ html.fscroll .who .flip-in{transition:none}
 <!-- ================= ШЕФ ================= -->
 <section class="sec" id="chef" style="padding-top:0">
   <div class="wrap chef">
-    <figure class="chef-ph rv"><img src="img/chef-photo.webp" alt="Шеф Дмитро" loading="lazy"><figcaption><b>Шеф Дмитро</b><span>бренд-шеф, технолог харчової промисловості</span></figcaption></figure>
+    <div class="chef-l">
+      <figure class="chef-ph rv"><img src="img/chef-photo.webp" alt="Шеф Дмитро" loading="lazy"></figure>
+      <blockquote class="cq glass rv" id="qtText"><p>Для мене відкриття закладу — це не просто черговий проєкт. <em>Це моя репутація.</em> Тому я вкладаю душу в кожну деталь і відповідаю за&nbsp;результат.</p><footer><b>Дмитро Барсук</b><span>бренд-шеф і засновник бюро</span></footer></blockquote>
+    </div>
     <div class="chef-txt">
       <div class="sh rv"><h2 class="h2">Хто відкриває <em>ваш заклад</em></h2></div>
       <p class="rv"><b>14 років на кухні, з них 12 шеф-кухарем.</b> Як бренд-шеф мережі Red Cat керував командою з 20+ кухарів і 9 точками. Дмитро не консультує здалеку, а сам робить те, від чого залежить успіх закладу:</p>
       <ul class="skills rv"><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h10l3 3v15H6z"/><path d="M9 9h7M9 13h7M9 17h4"/></svg></i><div><b>Меню й техкарти</b><span>страви, які кухня готує стабільно й з правильною собівартістю</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M7 7V4h10v3M7 12h.01M11 12h.01"/></svg></i><div><b>Кухня під меню</b><span>планування цехів і обладнання, щоб кухня працювала швидко</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.5 6-5.5s5.4 2.1 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.6c2.4.2 4.2 2 4.8 4.9"/></svg></i><div><b>Команда</b><span>найм і навчання кухарів і залу до відкриття</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l5-5M14 4c3 0 6 3 6 6l-6 6-6-6 6-6z"/><circle cx="14.5" cy="9.5" r="1.6"/></svg></i><div><b>Запуск і супровід</b><span>перший день і місяць поруч, поки все не запрацює рівно</span></div></li></ul>
-      <blockquote class="cq rv" id="qtText"><p>Для мене відкриття закладу — це не просто черговий проєкт. <em>Це моя репутація.</em> Тому я вкладаю душу в кожну деталь і відповідаю за&nbsp;результат.</p><footer><b>Дмитро Барсук</b>, бренд-шеф і засновник бюро</footer></blockquote>
       <div class="facts">
         <div class="fact rv"><b data-count="14">14</b><span>років на кухні</span></div>
         <div class="fact rv"><b data-count="20" data-suffix="+">20+</b><span>запусків по Україні</span></div>
@@ -1970,18 +1985,21 @@ html.fscroll .who .flip-in{transition:none}
       var vh = window.innerHeight, sy = window.scrollY;
       cards.forEach(function (c, i) {
         var top = docTop(c) - sy, h = c.offsetHeight, side = i % 2 ? -1 : 1;   // 1-а і 3-я — справа, 2-а — зліва
-        var hdr = hd ? hd.offsetHeight : 66, topA = vh - 14 - h, endTop = hdr + Math.max(12, (vh - hdr - h) * 0.35);
-        var pin = ease(clamp((vh - top) / Math.max(h * 0.6, 120)));                 // вилітає, поки картка заходить на екран
-        var pf = ease(clamp((topA - top) / Math.max(topA - endTop, vh * 0.18)));   // перевертається, коли вже видно всю
+        var hdr = hd ? hd.offsetHeight : 66, cy = top + h / 2;
+        var pin = ease(clamp((vh - top) / Math.max(h * 0.6, 120)));                 // вилітає збоку, поки картка заходить на екран
         c.style.transform = 'translateX(' + ((1 - pin) * side * 110).toFixed(2) + '%) rotate(' + ((1 - pin) * side * 7).toFixed(2) + 'deg)';
         c.style.opacity = (0.2 + 0.8 * pin).toFixed(3);
-        $('.flip-in', c).style.transform = 'rotateY(' + (pf * 180).toFixed(1) + 'deg)';
+        // перевертається сама, коли середина картки піднялась вище середини екрана і картку видно всю
+        var full = top >= hdr - 4 && top + h <= vh + 4;
+        if (!c.classList.contains('on') && cy < vh * 0.5 && (full || top < hdr)) c.classList.add('on');
+        else if (c.classList.contains('on') && cy > vh * 0.7) c.classList.remove('on');
       });
     }
     function req() { if (!tick) { tick = true; requestAnimationFrame(upd); } }
     function setMode() {
       on = mq.matches; root.classList.toggle('fscroll', on);
-      if (on) upd(); else cards.forEach(function (c) { c.style.transform = ''; c.style.opacity = ''; $('.flip-in', c).style.transform = ''; });
+      cards.forEach(function (c) { $('.flip-in', c).style.transform = ''; });
+      if (on) upd(); else cards.forEach(function (c) { c.style.transform = ''; c.style.opacity = ''; c.classList.remove('on'); });
     }
     if (mq.addEventListener) mq.addEventListener('change', setMode); else mq.addListener(setMode);
     window.addEventListener('scroll', req, { passive: true }); window.addEventListener('resize', req);
