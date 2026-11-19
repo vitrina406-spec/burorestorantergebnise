@@ -359,20 +359,114 @@ html.mo .fi.rv:not(.in) s::after{transform:scaleX(0)}
 .fi p svg{flex:none;margin-top:2px}
 @media (max-width:760px){.fr{grid-template-columns:minmax(0,1fr)}}
 
-/* ---------- слово шефа: цитата між «франшизою» і «шефом» ---------- */
-.quote-sec{background:radial-gradient(55% 75% at 12% 18%,rgba(226,50,29,.14),transparent 70%)}
-.qt{margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(20px,3.4vw,52px);row-gap:clamp(24px,3vw,38px);max-width:1120px}
-.qt-mark{grid-row:1/3;width:clamp(58px,7vw,108px);height:auto;color:var(--red);margin-top:.35em}
-.qt-text{margin:0}
-.qt-text p{margin:0;font:700 clamp(30px,3.9vw,58px)/1.1 var(--fd);letter-spacing:-.002em;text-wrap:pretty}
-.qt-text em{font-style:normal;color:var(--red)}
-.qt-text.qt-on .w{opacity:.2;transition:opacity .35s ease}
-.qt-text.qt-on .w.lit{opacity:1}
-.qt-by{display:flex;align-items:center;gap:14px}
-.qt-by img{width:58px;height:58px;border-radius:50%;object-fit:cover;object-position:50% 14%;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--red)}
-.qt-by b{display:block;font:800 24px/1.05 var(--fd);text-transform:uppercase}
-.qt-by small{display:block;margin-top:3px;font:500 15px/1.4 var(--fb);color:var(--mute)}
-@media (max-width:640px){.qt{grid-template-columns:minmax(0,1fr)}.qt-mark{grid-row:auto;width:54px;margin:0}}
+/* ---------- етапи запуску: стрічка над задачами ---------- */
+.proc{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:clamp(30px,4vw,48px) 0 0;padding:0;list-style:none;counter-reset:pr;position:relative}
+.proc::before{content:"";position:absolute;left:24px;right:24px;top:24px;height:2px;background:repeating-linear-gradient(90deg,var(--red) 0 8px,transparent 8px 14px);opacity:.5}
+.proc li{position:relative;display:grid;align-content:start;gap:6px;min-width:0}
+.proc .pn{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--paper);border:2px solid var(--red);font:900 22px/1 var(--fd);color:var(--red);margin-bottom:6px}
+.proc li:nth-child(4) .pn{background:var(--red);color:#fff}
+.proc b{font:800 21px/1.05 var(--fd);text-transform:uppercase;color:var(--ink)}
+.proc span:not(.pn){font-size:14px;line-height:1.45;color:var(--ink-mute)}
+@media (max-width:1100px){.proc{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:22px}.proc::before{display:none}}
+@media (max-width:600px){
+  .proc{grid-template-columns:minmax(0,1fr);gap:0}
+  .proc li{grid-template-columns:40px minmax(0,1fr);column-gap:14px;row-gap:2px;padding:10px 0;border-bottom:1px solid rgba(30,26,24,.12)}
+  .proc .pn{grid-row:1/3;width:40px;height:40px;font-size:19px;margin:0}
+  .proc b{font-size:19px;align-self:end}
+}
+/* ---------- франшиза чи свій заклад: порівняння під цінами ---------- */
+.vs{margin-top:clamp(48px,6vw,80px)}
+.vs-t{margin:0 0 20px;font:900 clamp(30px,3.4vw,48px)/1 var(--fd);text-transform:uppercase}
+.vs-t em{font-style:normal;color:var(--red)}
+.vs-tb{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card)}
+.vs-r{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--line)}
+.vs-r:first-child{border-top:0}
+.vs-r>*{padding:18px 22px;min-width:0}
+.vs-h span{font:800 20px/1 var(--fd);text-transform:uppercase;color:var(--mute)}
+.vs-h span:last-child{color:var(--red)}
+.vs-r b{font:800 20px/1.15 var(--fd);text-transform:uppercase}
+.vs-no,.vs-yes{display:flex;gap:10px;align-items:flex-start;font:600 15.5px/1.45 var(--fb)}
+.vs-no{color:#8E857C}
+.vs-no>span{text-decoration:line-through;text-decoration-color:rgba(226,50,29,.75);text-decoration-thickness:2px}
+.vs-no i{color:#8E857C}
+.vs-yes{background:rgba(226,50,29,.07)}
+.vs-yes i{color:var(--red)}
+.vs i{flex:none;margin-top:2px;display:grid}
+.vs small{display:none}
+@media (max-width:700px){
+  .vs-h{display:none}
+  .vs-r{grid-template-columns:minmax(0,1fr)}
+  .vs-r>*{padding:6px 18px}
+  .vs-r b{padding-top:18px}
+  .vs-yes{background:none;padding-bottom:18px}
+  .vs small{display:inline;font-weight:700;color:inherit}
+}
+/* ---------- Telegram у блоці запису ---------- */
+.tg-mini{display:grid;gap:16px;margin-top:30px;padding:22px 24px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.tg-mini b{display:block;font:800 23px/1.1 var(--fd);text-transform:uppercase}
+.tg-mini span{display:block;margin-top:6px;font-size:15px;line-height:1.5;color:var(--mute)}
+.tgb2{justify-self:start;background:#2AABEE;box-shadow:0 14px 34px rgba(42,171,238,.28)}
+.tgb2:hover{background:#1E96D4}
+.tgb2 i{color:#2AABEE}
+/* ---------- квіз: банер ---------- */
+.qb{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(24px,4vw,64px);align-items:center;padding:clamp(28px,4vw,56px);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,#E9402A,var(--red) 45%,var(--red2));color:#fff;box-shadow:0 30px 70px rgba(226,50,29,.25)}
+.qb::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;border:40px solid rgba(255,255,255,.08);pointer-events:none}
+.qb h2{margin:0;font:900 clamp(34px,4.2vw,62px)/.98 var(--fd);text-transform:uppercase;text-wrap:balance}
+.qb h2 em{font-style:normal;color:#1E1A18}
+.qb p{margin:14px 0 0;max-width:36em;font:500 16.5px/1.55 var(--fb);color:rgba(255,255,255,.92)}
+.qb-go{position:relative;z-index:1;display:grid;gap:18px;justify-items:start}
+.qb .btn{background:#1E1A18;box-shadow:0 18px 40px rgba(0,0,0,.3)}
+.qb .btn:hover{background:#000}
+.qb .btn i{color:#1E1A18}
+.qb-steps{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;counter-reset:qs}
+.qb-steps li{counter-increment:qs;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.16);font:700 13px var(--fb)}
+.qb-steps li::before{content:counter(qs) ". ";opacity:.75}
+@media (max-width:860px){.qb{grid-template-columns:minmax(0,1fr)}}
+/* ---------- квіз: вікно ---------- */
+.qz-dlg{max-width:760px}
+.qz-top{padding:clamp(24px,3.4vw,36px) clamp(22px,3.4vw,40px) 0;display:grid;gap:12px}
+.qz-top h2{margin:0;padding-right:44px;font:900 clamp(30px,3.6vw,44px)/1 var(--fd);text-transform:uppercase}
+.qz-top h2 em{font-style:normal;color:var(--red)}
+.qz-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;font:700 14px var(--fb);color:var(--mute)}
+.qz-back{background:none;border:0;padding:6px 0;font:700 14px var(--fb);color:var(--text);cursor:pointer}
+.qz-back:hover{color:var(--red)}
+.qz-bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+.qz-bar i{display:block;height:100%;width:0;border-radius:6px;background:var(--red);transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.qz-q,.qz-res{padding:22px clamp(22px,3.4vw,40px) clamp(24px,3.4vw,38px)}
+.qz-q h3{margin:0 0 18px;font:800 clamp(24px,2.6vw,32px)/1.05 var(--fd);text-transform:uppercase}
+.qz-dlg .qz-tiles{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.qz-dlg .qz-tiles .tile{aspect-ratio:1/.9}
+.qz-tiles .tile span{font-size:14.5px}
+.qz-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.qz-opt{min-height:58px;padding:14px 18px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:700 16px var(--fb);text-align:left;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.qz-opt:hover{border-color:var(--red);transform:translateY(-2px)}
+.qz-opt[aria-pressed="true"]{border-color:var(--red);background:rgba(226,50,29,.14)}
+.qz-q.sw>*,.qz-res.sw>*{animation:fxIn .45s cubic-bezier(.2,.8,.2,1) both}
+.qz-q.sw>:nth-child(2),.qz-res.sw>:nth-child(2){animation-delay:.06s}
+.qz-res.sw>:nth-child(3){animation-delay:.12s}
+.qz-est{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.qz-est div{display:grid;gap:6px;padding:18px 20px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.qz-est div:last-child{border-color:rgba(226,50,29,.5);background:rgba(226,50,29,.08)}
+.qz-est span{font:700 13.5px var(--fb);color:var(--mute)}
+.qz-est b{font:900 clamp(28px,3.4vw,40px)/1 var(--fd);white-space:nowrap}
+.qz-note{margin:12px 0 0;font-size:14.5px;line-height:1.5;color:var(--mute)}
+.qz-form{display:grid;gap:14px;margin-top:22px;padding-top:22px;border-top:1px solid var(--line)}
+.qz-lead{margin:0;font:600 15.5px/1.5 var(--fb)}
+@media (max-width:620px){
+  .qz-dlg .qz-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qz-dlg .qz-tiles .tile{aspect-ratio:1/.64}
+  .qz-opts{grid-template-columns:minmax(0,1fr)}
+  .qz-est{grid-template-columns:minmax(0,1fr)}
+  .qz-est b{white-space:normal}
+}
+/* ---------- слово шефа: цитата під біографією ---------- */
+.cq{margin:4px 0;padding:2px 0 2px clamp(18px,2vw,26px);border-left:4px solid var(--red)}
+.cq p{margin:0;font:700 clamp(24px,2.2vw,32px)/1.18 var(--fd);text-wrap:pretty}
+.cq em{font-style:normal;color:var(--red)}
+.cq.qt-on .w{opacity:.22;transition:opacity .35s ease}
+.cq.qt-on .w.lit{opacity:1}
+.cq footer{margin-top:12px;font:500 14.5px/1.4 var(--fb);color:var(--mute)}
+.cq footer b{color:var(--text);font-weight:700}
 /* ---------- шеф: продаємо знання й уміння ---------- */
 .chef{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,5vw,80px);align-items:center}
 .chef-ph{position:relative;margin:0}
@@ -647,6 +741,18 @@ html.fscroll .who .flip-in{transition:none}
 /* формати на вузькому екрані: опис відкривається у вікні після вибору ніші */
 #fxBld{scroll-margin-top:96px}
 @media (max-width:900px){.fx-card{display:none}.fx-bld{cursor:pointer}}
+
+/* ---------- соцмережі ---------- */
+.soc{display:flex;flex-wrap:wrap;gap:10px}
+.soc a{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--text);text-decoration:none;transition:background .25s,border-color .25s,transform .25s}
+.soc a:hover{background:var(--red);border-color:var(--red);transform:translateY(-2px)}
+.soc svg{width:20px;height:20px}
+.ft-g .soc{margin-top:18px}
+.ft-g .soc a{font-size:0}
+.mnav .soc{margin-top:auto;padding-top:18px}
+.mnav .soc a{width:52px;height:52px;font-size:0}
+.mnav .soc+.btn{margin-top:16px}
+.soc-line{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:4px;font:600 15px/1.4 var(--fb);color:var(--mute)}
 </style>
 </head>
 <body>
@@ -670,6 +776,7 @@ html.fscroll .who .flip-in{transition:none}
 <div class="mnav" id="mnav" hidden>
   <button class="mnav-x" type="button" id="mnavX" aria-label="Закрити меню"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <a href="#for">Для кого</a><a href="#formats">Формати</a><a href="#projects">Проєкти</a><a href="#services">Послуги</a><a href="#price">Вартість</a><a href="#chef">Про шефа</a><a href="#faq">Питання</a>
+  <div class="soc"><a href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.4-1.6zM9.2 14.3l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.2-.3 3.3z"/></svg></a><a href="https://www.instagram.com/" data-soc="ig" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg></a><a href="https://www.tiktok.com/" data-soc="tt" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 2.8h3.1c.3 2.3 1.8 3.8 4.2 4v3.2c-1.6 0-3-.5-4.2-1.3v6.6a5.9 5.9 0 1 1-5.9-5.9c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 1.9 2.6V2.8z"/></svg></a></div>
   <button class="btn" type="button" data-consult>Консультація<i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
 </div>
 
@@ -683,7 +790,7 @@ html.fscroll .who .flip-in{transition:none}
       <p class="hx-sub"><b>Без франшизи й роялті.</b> Шеф веде запуск від приміщення до першого гостя за 1,5–3 місяці, а заклад залишається повністю вашим.</p>
       <div class="hx-cta">
         <button class="btn" type="button" data-consult>Записатися на консультацію<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
-        <a class="link" href="#price">Скільки коштує<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="link" type="button" data-quiz>Порахувати вартість за 1 хв<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
       <div class="hx-stats">
         <div><b>від $<span data-count="2800">2 800</span></b><span>запуск під ключ*</span></div>
@@ -882,7 +989,7 @@ html.fscroll .who .flip-in{transition:none}
     </div>
     <div class="price-foot rv">
       <p>* Попередні ціни. Площа понад 80 м² або кілька точок одразу рахуємо індивідуально.</p>
-      <button class="btn" type="button" data-consult>Отримати точний кошторис<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+      <button class="btn" type="button" data-quiz>Порахувати свій кошторис<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
     </div>
   </div>
 </section>
@@ -903,17 +1010,6 @@ html.fscroll .who .flip-in{transition:none}
   </div>
 </section>
 
-<!-- ================= СЛОВО ШЕФА ================= -->
-<section class="sec quote-sec" id="word" aria-label="Слово шефа">
-  <div class="wrap">
-    <figure class="qt">
-      <svg class="qt-mark" viewBox="0 0 60 48" fill="currentColor" aria-hidden="true"><path d="M0 48V28C0 13 7 4 22 0l3 6C15 10 11 16 11 24h13v24H0z"/><path d="M34 48V28C34 13 41 4 56 0l3 6C49 10 45 16 45 24h13v24H34z"/></svg>
-      <blockquote class="qt-text" id="qtText"><p>Для мене відкриття закладу — це не просто черговий проєкт. <em>Це моя репутація.</em> Тому я вкладаю душу в кожну деталь і відповідаю за&nbsp;результат.</p></blockquote>
-      <figcaption class="qt-by"><img src="img/chef-photo.webp" alt="" width="58" height="58" loading="lazy"><span><b>Дмитро Барсук</b><small>бренд-шеф і засновник бюро</small></span></figcaption>
-    </figure>
-  </div>
-</section>
-
 <!-- ================= ШЕФ ================= -->
 <section class="sec" id="chef" style="padding-top:0">
   <div class="wrap chef">
@@ -922,6 +1018,7 @@ html.fscroll .who .flip-in{transition:none}
       <div class="sh rv"><h2 class="h2">Хто відкриває <em>ваш заклад</em></h2></div>
       <p class="rv"><b>14 років на кухні, з них 12 шеф-кухарем.</b> Як бренд-шеф мережі Red Cat керував командою з 20+ кухарів і 9 точками. Дмитро не консультує здалеку, а сам робить те, від чого залежить успіх закладу:</p>
       <ul class="skills rv"><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h10l3 3v15H6z"/><path d="M9 9h7M9 13h7M9 17h4"/></svg></i><div><b>Меню й техкарти</b><span>страви, які кухня готує стабільно й з правильною собівартістю</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M7 7V4h10v3M7 12h.01M11 12h.01"/></svg></i><div><b>Кухня під меню</b><span>планування цехів і обладнання, щоб кухня працювала швидко</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.5 6-5.5s5.4 2.1 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.6c2.4.2 4.2 2 4.8 4.9"/></svg></i><div><b>Команда</b><span>найм і навчання кухарів і залу до відкриття</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l5-5M14 4c3 0 6 3 6 6l-6 6-6-6 6-6z"/><circle cx="14.5" cy="9.5" r="1.6"/></svg></i><div><b>Запуск і супровід</b><span>перший день і місяць поруч, поки все не запрацює рівно</span></div></li></ul>
+      <blockquote class="cq rv" id="qtText"><p>Для мене відкриття закладу — це не просто черговий проєкт. <em>Це моя репутація.</em> Тому я вкладаю душу в кожну деталь і відповідаю за&nbsp;результат.</p><footer><b>Дмитро Барсук</b>, бренд-шеф і засновник бюро</footer></blockquote>
       <div class="facts">
         <div class="fact rv"><b data-count="14">14</b><span>років на кухні</span></div>
         <div class="fact rv"><b data-count="20" data-suffix="+">20+</b><span>запусків по Україні</span></div>
@@ -951,6 +1048,7 @@ html.fscroll .who .flip-in{transition:none}
       <div class="sh rv"><h2 class="h2">Пишіть шефу <em>в Telegram</em></h2></div>
       <p class="lead rv">Розкажіть про ідею чи приміщення. Дмитро відповідає сам і підкаже, з чого почати.</p>
       <div class="rv"><a class="btn" href="https://t.me/" target="_blank" rel="noopener" id="tgLink" style="background:#2AABEE;box-shadow:0 14px 34px rgba(42,171,238,.3)">Написати в Telegram<i style="color:#2AABEE"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.4-1.6zM9.2 14.3l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.2-.3 3.3z"/></svg></i></a></div>
+      <div class="soc-line rv"><span>Запуски зсередини — в Instagram і TikTok</span><div class="soc"><a href="https://www.instagram.com/" data-soc="ig" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg></a><a href="https://www.tiktok.com/" data-soc="tt" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 2.8h3.1c.3 2.3 1.8 3.8 4.2 4v3.2c-1.6 0-3-.5-4.2-1.3v6.6a5.9 5.9 0 1 1-5.9-5.9c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 1.9 2.6V2.8z"/></svg></a></div></div>
     </div>
     <div class="chat arm rv" id="chat">
       <div class="chat-h"><img src="img/chef-photo.webp" alt="" width="44" height="44"><div><b>Шеф Дмитро</b><span>у мережі</span></div></div>
@@ -987,9 +1085,9 @@ html.fscroll .who .flip-in{transition:none}
 <footer class="ft">
   <div class="wrap">
     <div class="ft-g">
-      <div><img src="img/buro-logo-duo.svg" alt="Бюро ресторанних рішень" width="157" height="60" style="height:60px;width:auto"><p>Заклади під ключ по всій Україні. Без франшизи й роялті.</p></div>
+      <div><img src="img/buro-logo-duo.svg" alt="Бюро ресторанних рішень" width="157" height="60" style="height:60px;width:auto"><p>Заклади під ключ по всій Україні. Без франшизи й роялті.</p><div class="soc"><a href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.4-1.6zM9.2 14.3l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.2-.3 3.3z"/></svg></a><a href="https://www.instagram.com/" data-soc="ig" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg></a><a href="https://www.tiktok.com/" data-soc="tt" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 2.8h3.1c.3 2.3 1.8 3.8 4.2 4v3.2c-1.6 0-3-.5-4.2-1.3v6.6a5.9 5.9 0 1 1-5.9-5.9c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 1.9 2.6V2.8z"/></svg></a></div></div>
       <div><h4>Розділи</h4><ul><li><a href="#formats">Формати</a></li><li><a href="#services">Послуги</a></li><li><a href="#price">Вартість</a></li><li><a href="#chef">Про шефа</a></li><li><a href="#faq">Питання</a></li></ul></div>
-      <div><h4>Контакти</h4><ul><li class="phone">[+380 XX XXX XX XX]</li><li>щодня з 9:00 до 21:00</li><li><a href="https://t.me/" target="_blank" rel="noopener">Telegram</a></li></ul></div>
+      <div><h4>Контакти</h4><ul><li class="phone">[+380 XX XXX XX XX]</li><li>щодня з 9:00 до 21:00</li><li><a href="https://t.me/" target="_blank" rel="noopener">Telegram</a></li><li><a href="https://www.instagram.com/" data-soc="ig" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.tiktok.com/" data-soc="tt" target="_blank" rel="noopener">TikTok</a></li></ul></div>
       <div><h4>Документи</h4><ul><li><a href="#privacy" data-doc="privacy">Політика конфіденційності</a></li><li><a href="#oferta" data-doc="oferta">Договір публічної оферти</a></li></ul></div>
     </div>
     <div class="ft-big" aria-hidden="true"><span>Бюро ресторанних рішень</span></div>
@@ -1026,6 +1124,35 @@ html.fscroll .who .flip-in{transition:none}
         <button class="btn" type="submit">Записатися<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
       </form>
       <button class="skip" type="button" id="cBack">← Змінити формат</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= КВІЗ ================= -->
+<div class="modal" id="quiz" hidden>
+  <div class="dialog qz-dlg" role="dialog" aria-modal="true" aria-labelledby="qzT">
+    <button class="dlg-x" type="button" data-close aria-label="Закрити"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="qz-top">
+      <h2 id="qzT">Скільки коштуватиме <em>ваш заклад</em></h2>
+      <div class="qz-meta"><span id="qzN">Питання 1 з 5</span><button class="qz-back" type="button" id="qzBack">← Назад</button></div>
+      <div class="qz-bar"><i id="qzBar"></i></div>
+    </div>
+    <div class="qz-q" id="qzQ"></div>
+    <div class="qz-res" id="qzRes" hidden>
+      <div class="qz-est">
+        <div><span>Робота шефа і команди</span><b id="qzWork">$3 300</b></div>
+        <div><span>Інвестиції в заклад</span><b id="qzInv">$15 000–25 000</b></div>
+      </div>
+      <p class="qz-note" id="qzNote"></p>
+      <form class="qz-form" data-source="Квіз: вартість відкриття" novalidate>
+        <p class="qz-lead">Точний кошторис шеф порахує під ваш формат і приміщення. Залиште контакти — Дмитро зв’яжеться й надішле розрахунок.</p>
+        <input type="hidden" name="format" id="qzF"><input type="hidden" name="area" id="qzA"><input type="hidden" name="city" id="qzC"><input type="hidden" name="when" id="qzW"><input type="hidden" name="budget" id="qzB"><input type="hidden" name="estimate" id="qzE">
+        <div class="fld"><label for="qName">Ваше ім’я</label><input id="qName" name="name" autocomplete="name" placeholder="Наприклад, Олена" required></div>
+        <div class="fld"><label for="qPhone">Телефон</label><input id="qPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 XX XXX XX XX" required></div>
+        <div class="fld"><span>Як зручніше зв’язатися</span><div class="ways" data-ways="q"></div></div>
+        <label class="agree"><input type="checkbox" checked required id="qAgree"><span>Погоджуюсь з обробкою персональних даних згідно з <a href="#privacy" data-doc="privacy">політикою конфіденційності</a></span></label>
+        <button class="btn" type="submit">Отримати точний кошторис<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
+      </form>
     </div>
   </div>
 </div>
@@ -1186,6 +1313,8 @@ html.fscroll .who .flip-in{transition:none}
   /* ---------- налаштування (що замінити перед запуском — див. README.txt) ---------- */
   var LEAD_ENDPOINT = '';            // адреса, куди надсилати заявки (сервіс форм або свій бот-сервер); порожньо = заявки лише в консоль
   var TELEGRAM = 'https://t.me/';    // посилання на Telegram шефа
+  var INSTAGRAM = 'https://www.instagram.com/';   // посилання на Instagram бюро (вставте профіль, коли з’явиться)
+  var TIKTOK = 'https://www.tiktok.com/';         // посилання на TikTok бюро
   var AUTO_POPUP_MS = 60000;         // вікно консультації відкриється саме один раз після хвилини гортання (0 = вимкнено)
   var VENUE_LINKS = {
     greystone: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Grey Stone ресторан Софіївська Борщагівка'),
@@ -1199,6 +1328,8 @@ html.fscroll .who .flip-in{transition:none}
   var CHECK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E2321D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
   $$('a[href="https://t.me/"]').forEach(function (a) { a.href = TELEGRAM; });
+  $$('a[data-soc="ig"]').forEach(function (a) { a.href = INSTAGRAM; });
+  $$('a[data-soc="tt"]').forEach(function (a) { a.href = TIKTOK; });
 
 
   /* ---------- заставка: логотип і червона риска, раз за сесію ---------- */
@@ -1885,6 +2016,57 @@ html.fscroll .who .flip-in{transition:none}
   $('#fxNext').addEventListener('click', function () { fxGo(fxI + 1); });
   FX.forEach(function (f) { var im = new Image(); im.src = foodSrc(f.f); });
 
+  /* ---------- квіз «скільки коштуватиме ваш заклад»: 5 питань → орієнтовний кошторис → контакти ---------- */
+  (function () {
+    var qz = $('#quiz'); if (!qz) return;
+    var Q = [
+      { k: 'format', t: 'Який заклад плануєте відкрити?', tiles: true, o: FX.map(function (f) { return [f.n, foodSrc(f.f)]; }) },
+      { k: 'area', t: 'Яка площа приміщення?', o: ['до 20 м²', '20–40 м²', '40–60 м²', '60–80 м²', 'Понад 80 м²', 'Приміщення ще немає'] },
+      { k: 'city', t: 'Де буде заклад?', o: ['Київ і область', 'Харків', 'Дніпро', 'Львів', 'Одеса', 'Інше місто'] },
+      { k: 'when', t: 'Коли хочете відкритися?', o: ['Якнайшвидше', 'За 2–3 місяці', 'За пів року', 'Поки вивчаю'] },
+      { k: 'budget', t: 'Скільки готові вкласти в запуск?', o: ['До $15 000', '$15 000–30 000', '$30 000–60 000', 'Понад $60 000', 'Ще не знаю'] }
+    ];
+    var ans = {}, cur = 0, qEl = $('#qzQ'), res = $('#qzRes'), back = $('#qzBack');
+    function bar(p) { $('#qzBar').style.width = (p * 100).toFixed(0) + '%'; }
+    function render() {
+      var q = Q[cur];
+      $('#qzN').textContent = 'Питання ' + (cur + 1) + ' з ' + Q.length; bar(cur / Q.length);
+      back.hidden = cur === 0; qEl.hidden = false; res.hidden = true;
+      qEl.innerHTML = '<h3>' + q.t + '</h3><div class="' + (q.tiles ? 'tiles qz-tiles' : 'qz-opts') + '">' + q.o.map(function (o, i) {
+        var lab = q.tiles ? o[0] : o, on = ans[q.k] === lab;
+        return q.tiles ? '<button type="button" class="tile" data-i="' + i + '" aria-pressed="' + on + '" style="background-image:url(' + o[1] + ')"><span>' + lab + '</span></button>'
+                       : '<button type="button" class="qz-opt" data-i="' + i + '" aria-pressed="' + on + '">' + lab + '</button>';
+      }).join('') + '</div>';
+      qEl.classList.remove('sw'); void qEl.offsetWidth; qEl.classList.add('sw');
+    }
+    function lo(r) { return r.split('–')[0]; } function hi(r) { var x = r.split('–'); return x[x.length - 1]; }
+    function result() {
+      var t = ['до 20 м²', '20–40 м²', '40–60 м²', '60–80 м²'].indexOf(ans.area), work, inv, note;
+      if (t >= 0) { work = '$' + fmt(TIERS[t][1]); inv = '$' + TIERS[t][2]; note = 'Розрахунок для площі ' + ans.area + '. Точна сума залежить від стану приміщення, обладнання й меню.'; }
+      else if (ans.area === 'Понад 80 м²') { work = 'від $' + fmt(TIERS[3][1]); inv = 'від $' + lo(TIERS[3][2]); note = 'Великі заклади й кілька точок шеф рахує індивідуально.'; }
+      else { work = 'від $' + fmt(TIERS[0][1]); inv = '$' + lo(TIERS[0][2]) + '–' + hi(TIERS[3][2]); note = 'Сума залежить від приміщення, яке оберете. Шеф допоможе його знайти й оцінити.'; }
+      if (ans.budget === 'До $15 000' && t > 0) note += ' Бюджет менший за середній для такої площі — шеф підкаже, як у нього вкластися.';
+      $('#qzWork').textContent = work; $('#qzInv').textContent = inv; $('#qzNote').textContent = note;
+      $('#qzF').value = ans.format || ''; $('#qzA').value = ans.area || ''; $('#qzC').value = ans.city || ''; $('#qzW').value = ans.when || ''; $('#qzB').value = ans.budget || '';
+      $('#qzE').value = 'Робота шефа: ' + work + '; інвестиції: ' + inv;
+      $('#qzN').textContent = 'Ваш орієнтовний кошторис'; bar(1); back.hidden = false;
+      qEl.hidden = true; res.hidden = false; res.classList.remove('sw'); void res.offsetWidth; res.classList.add('sw');
+      var dl = $('.dialog', qz); if (dl) dl.scrollTop = 0;
+    }
+    qEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-i]'); if (!b) return;
+      var q = Q[cur], o = q.o[+b.dataset.i]; ans[q.k] = q.tiles ? o[0] : o; b.setAttribute('aria-pressed', 'true');
+      setTimeout(function () { cur++; if (cur < Q.length) render(); else result(); }, 230);
+    });
+    back.addEventListener('click', function () { if (!res.hidden) { cur = Q.length - 1; render(); } else if (cur > 0) { cur--; render(); } });
+    function openQuiz(fmtName) {
+      closeAll(qz); ans = {}; cur = 0;
+      if (fmtName) { ans.format = fmtName; cur = 1; }
+      render(); openM(qz, '.qz-opt, .tile');
+    }
+    document.addEventListener('click', function (e) { var t = e.target.closest('[data-quiz]'); if (t) { e.preventDefault(); closeMenu(); openQuiz(t.dataset.format || ''); } });
+  })();
+
   /* ---------- слово шефа: слова засвічуються одне за одним під час гортання ---------- */
   (function () {
     var q = $('#qtText'); if (!q) return;
@@ -1896,7 +2078,7 @@ html.fscroll .who .flip-in{transition:none}
           node.replaceChild(frag, n);
         } else if (n.nodeType === 1) wrap(n);
       });
-    })(q);
+    })($('p', q) || q);
     var ws = $$('.w', q), tick = false;
     q.classList.add('qt-on');
     function upd() {
@@ -2015,11 +2197,12 @@ html.fscroll .who .flip-in{transition:none}
     $$('[data-count]').forEach(function (el) { el.textContent = (el.dataset.prefix || '') + '0' + (el.dataset.suffix || ''); cio.observe(el); });
 
     var chat = $('#chat');
-    new IntersectionObserver(function (es) { es.forEach(function (e) { chat.classList.toggle('in', e.isIntersecting || e.boundingClientRect.top < 0); }); }, { threshold: 0.35 }).observe(chat);
+    if (chat) new IntersectionObserver(function (es) { es.forEach(function (e) { chat.classList.toggle('in', e.isIntersecting || e.boundingClientRect.top < 0); }); }, { threshold: 0.35 }).observe(chat);
 
     /* етапи прив'язані до гортання: униз — з'являються крок за кроком, угору — так само по черзі зникають */
     (function () {
-      var grid = $('#stepsGrid'), steps = $$('.step', grid), n = steps.length, tick = false;
+      var grid = $('#stepsGrid'); if (!grid) return;
+      var steps = $$('.step', grid), n = steps.length, tick = false;
       grid.classList.add('arm');
       function upd() {
         tick = false;
@@ -2038,7 +2221,7 @@ html.fscroll .who .flip-in{transition:none}
   } else {
     root.classList.remove('mo');
     $$('.step').forEach(function (s) { s.classList.add('in'); });
-    $('#chat').classList.add('in');
+    if ($('#chat')) $('#chat').classList.add('in');
   }
 
   /* ---------- нижня кнопка на телефоні: після першого екрана, ховається біля форми ---------- */
