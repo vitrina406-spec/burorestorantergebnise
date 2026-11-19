@@ -121,8 +121,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* рядок форматів під першим екраном: спокійно їде, замість стрічок */
 .fmq{position:relative;height:84px;display:flex;align-items:center;overflow:hidden;border-block:1px solid var(--line);background:rgba(20,18,16,.7);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.fmq .tr{flex:none;display:flex;gap:12px;width:max-content;animation:marq 60s linear infinite}
-.fmq:hover .tr{animation-play-state:paused}
+.fmq .tr{flex:none;display:flex;gap:12px;width:max-content;padding-inline:6px}
+.fmq{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;cursor:grab}
+.fmq::-webkit-scrollbar{display:none}
+.fmq.drag{cursor:grabbing}
+.fmq.drag button{pointer-events:none}
 .fmq button{flex:none;display:inline-flex;align-items:center;gap:10px;padding:7px 18px 7px 7px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:800 19px/1 var(--fd);text-transform:uppercase;white-space:nowrap;transition:border-color .25s,background .25s}
 .fmq button:hover{border-color:var(--red);background:var(--card2)}
 .fmq img{width:44px;height:44px;max-width:none;border-radius:50%;object-fit:cover;flex:none}
@@ -450,6 +453,13 @@ html.mo .fi.rv:not(.in) s::after{transform:scaleX(0)}
 .qz-est span{font:700 13.5px var(--fb);color:var(--mute)}
 .qz-est b{font:900 clamp(28px,3.4vw,40px)/1 var(--fd);white-space:nowrap}
 .qz-note{margin:12px 0 0;font-size:14.5px;line-height:1.5;color:var(--mute)}
+.pm-dlg{max-width:620px}
+.pm-in{padding:clamp(26px,4vw,40px);display:grid;gap:16px}
+.pm-in h2{margin:0;padding-right:46px;font:900 clamp(32px,4vw,48px)/1 var(--fd);text-transform:uppercase;text-wrap:balance}
+.pm-in h2 em{font-style:normal;color:var(--red)}
+.pm-sub{margin:0;color:var(--mute);font-size:15.5px}
+.pm-areas{margin:0}
+.qz-est small{font-size:12.5px;color:var(--mute)}
 .qz-form{display:grid;gap:14px;margin-top:22px;padding-top:22px;border-top:1px solid var(--line)}
 .qz-lead{margin:0;font:600 15.5px/1.5 var(--fb)}
 @media (max-width:620px){
@@ -892,7 +902,7 @@ html.fscroll .who .flip-in{transition:none}
             <h3 class="fx-name" id="fxName">Кав’ярня</h3>
             <p class="fx-desc" id="fxDesc"></p>
             <ul class="fx-list" id="fxList"></ul>
-            <div class="fx-cta"><button class="btn" type="button" data-consult id="fxGoBtn">Обговорити<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><a class="link" href="#price">Скільки коштує<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+            <div class="fx-cta"><button class="btn" type="button" data-consult id="fxGoBtn">Обговорити<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><button class="link" type="button" data-price="0" id="fxPrice">Скільки коштує<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
           </div>
         </article>
       </div>
@@ -1157,6 +1167,24 @@ html.fscroll .who .flip-in{transition:none}
   </div>
 </div>
 
+<!-- ================= ВІКНО «СКІЛЬКИ КОШТУЄ» ================= -->
+<div class="modal" id="priceM" hidden>
+  <div class="dialog pm-dlg" role="dialog" aria-modal="true" aria-labelledby="pmT">
+    <button class="dlg-x" type="button" data-close aria-label="Закрити"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="pm-in">
+      <h2 id="pmT">Скільки коштує <em>відкриття</em></h2>
+      <p class="pm-sub">Оберіть площу приміщення — покажемо попередні ціни.</p>
+      <div class="areas pm-areas" id="pmAreas" role="group" aria-label="Площа приміщення"></div>
+      <div class="qz-est pm-est">
+        <div><span>Робота шефа і команди</span><b id="pmWork">$3 300</b><small>разова оплата</small></div>
+        <div><span>Середні інвестиції</span><b id="pmInv">$15 000–25 000</b><small>ремонт, обладнання, запуск</small></div>
+      </div>
+      <p class="qz-note">Ціни попередні. Площа понад 80 м² або кілька точок одразу — рахуємо індивідуально.</p>
+      <div class="fm-cta"><button class="btn" type="button" data-quiz data-format="">Порахувати точно<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><button class="link" type="button" data-consult data-format="">Обговорити з шефом<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    </div>
+  </div>
+</div>
+
 <!-- ================= ВІКНО ФОРМАТУ ================= -->
 <div class="modal" id="fmtModal" hidden>
   <div class="dialog fm-dlg" role="dialog" aria-modal="true" aria-labelledby="fmT">
@@ -1166,7 +1194,7 @@ html.fscroll .who .flip-in{transition:none}
       <h2 id="fmT">Кав’ярня</h2>
       <p id="fmD"></p>
       <ul id="fmL"></ul>
-      <div class="fm-cta"><button class="btn" type="button" data-consult id="fmGo">Обговорити<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><span class="fm-links"><a class="link" href="#price" data-close>Скільки коштує<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="link" href="#fxBld" data-close id="fmAll">Подивитися будівлю<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span></div>
+      <div class="fm-cta"><button class="btn" type="button" data-consult id="fmGo">Обговорити<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><span class="fm-links"><button class="link" type="button" data-price="0" id="fmPrice">Скільки коштує<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></span></div>
     </div>
   </div>
 </div>
@@ -1794,7 +1822,7 @@ html.fscroll .who .flip-in{transition:none}
   var openStack = [];
   function openM(m, focusSel) {
     if (!m || !m.hidden) return;
-    m.__last = document.activeElement; m.hidden = false; openStack.push(m);
+    m.__last = document.activeElement; m.hidden = false; openStack.push(m); m.style.zIndex = String(100 + openStack.length);   // нове вікно завжди поверх попереднього
     document.documentElement.style.overflow = 'hidden';
     var dl = $('.dialog', m); if (dl) dl.scrollTop = 0;
     setTimeout(function () { var f = focusSel ? $(focusSel, m) : $('.dlg-x', m); if (f) f.focus(); }, 60);
@@ -1902,11 +1930,38 @@ html.fscroll .who .flip-in{transition:none}
     var one = FX.map(function (f, i) { return '<button type="button" data-fx="' + i + '"><img src="' + foodSrc(f.f) + '" alt="" width="44" height="44" loading="lazy">' + f.n + '</button>'; }).join('');
     $('#fmq').innerHTML = one + one.replace(/<button /g, '<button tabindex="-1" aria-hidden="true" ');
     $('#fmq').addEventListener('click', function (e) { var b = e.target.closest('[data-fx]'); if (b) openFmt(+b.dataset.fx); });
+    // рядок їде сам; пальцем, мишкою чи тачпадом його можна прогорнути, потім він їде далі з того місця
+    (function () {
+      var box = $('.fmq'), tr = $('#fmq'), x = 0, last = 0, hold = 0, over = false, vis = true, drag = null, moved = false;
+      function half() { return tr.scrollWidth / 2; }
+      function wrap() { var h = half(); if (h < 50) return; if (box.scrollLeft >= h) box.scrollLeft -= h; else if (box.scrollLeft <= 0) box.scrollLeft += h; }
+      function frame(t) {
+        requestAnimationFrame(frame);
+        var dt = last ? Math.min(64, t - last) : 16; last = t;
+        if (!vis || document.hidden || over || drag || t < hold) { x = box.scrollLeft; return; }
+        x += 40 * dt / 1000; var h = half(); if (h > 50 && x >= h) x -= h;
+        box.scrollLeft = x;
+      }
+      requestAnimationFrame(frame);
+      function pause(ms) { hold = performance.now() + (ms || 2500); }
+      box.addEventListener('scroll', function () { if (drag || performance.now() < hold) wrap(); }, { passive: true });
+      box.addEventListener('touchstart', function () { pause(60000); }, { passive: true });
+      box.addEventListener('touchend', function () { pause(2500); }, { passive: true });
+      box.addEventListener('wheel', function (e) { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) pause(2500); }, { passive: true });
+      box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') over = true; });
+      box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { over = false; pause(800); } });
+      // мишкою — перетягування
+      box.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0) return; drag = { x: e.clientX, s: box.scrollLeft }; moved = false; });
+      window.addEventListener('pointermove', function (e) { if (!drag) return; var dx = e.clientX - drag.x; if (Math.abs(dx) > 5) { moved = true; box.classList.add('drag'); } if (moved) { box.scrollLeft = drag.s - dx; wrap(); drag.s = box.scrollLeft + dx; } });
+      window.addEventListener('pointerup', function () { if (!drag) return; drag = null; box.classList.remove('drag'); pause(2500); });
+      box.addEventListener('click', function (e) { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(box);
+    })();
   })();
 
   /* ---------- для кого: картки перевертаються (на телефоні — дотиком) ---------- */
   (function () {
-    var cards = $$('.who .flip'), mq = matchMedia('(max-width:760px)'), on = false, tick = false, root = document.documentElement;
+    var cards = $$('.who .flip'), mq = matchMedia('(max-width:760px)'), on = false, tick = false, root = document.documentElement, hd = $('.hd');
     function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
     function ease(x) { return 1 - Math.pow(1 - x, 3); }
     function docTop(el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; }
@@ -1915,8 +1970,9 @@ html.fscroll .who .flip-in{transition:none}
       var vh = window.innerHeight, sy = window.scrollY;
       cards.forEach(function (c, i) {
         var top = docTop(c) - sy, h = c.offsetHeight, side = i % 2 ? -1 : 1;   // 1-а і 3-я — справа, 2-а — зліва
-        var pin = ease(clamp((vh - top) / (vh * 0.42)));
-        var pf = ease(clamp((vh * 0.8 - (top + h / 2)) / (vh * 0.28)));
+        var hdr = hd ? hd.offsetHeight : 66, topA = vh - 14 - h, endTop = hdr + Math.max(12, (vh - hdr - h) * 0.35);
+        var pin = ease(clamp((vh - top) / Math.max(h * 0.6, 120)));                 // вилітає, поки картка заходить на екран
+        var pf = ease(clamp((topA - top) / Math.max(topA - endTop, vh * 0.18)));   // перевертається, коли вже видно всю
         c.style.transform = 'translateX(' + ((1 - pin) * side * 110).toFixed(2) + '%) rotate(' + ((1 - pin) * side * 7).toFixed(2) + 'deg)';
         c.style.opacity = (0.2 + 0.8 * pin).toFixed(3);
         $('.flip-in', c).style.transform = 'rotateY(' + (pf * 180).toFixed(1) + 'deg)';
@@ -1987,7 +2043,8 @@ html.fscroll .who .flip-in{transition:none}
     $('#fxDesc').textContent = 'Формат: ' + f.d + '.';
     $('#fxPh').style.backgroundImage = 'url(' + foodSrc(f.f) + ')';
     $('#fxList').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
-    var go = $('#fxGoBtn'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити: ' + f.n.toLowerCase();
+    $('#fxPrice').dataset.price = i;
+    var go = $('#fxGoBtn'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
     $('#fxCnt').innerHTML = '<b>' + (i < 9 ? '0' : '') + (i + 1) + '</b> / ' + FX.length;
     fxBox.setAttribute('aria-label', 'Будівля: ' + f.n.toLowerCase());
     fxCard.classList.remove('sw'); void fxCard.offsetWidth; fxCard.classList.add('sw');
@@ -1996,12 +2053,12 @@ html.fscroll .who .flip-in{transition:none}
   fxGo(0);
   // вікно формату: відкривається з рядка форматів на першому екрані
   function openFmt(i, fromTabs) {
-    $('#fmAll').hidden = !!fromTabs;
     var f = FX[i]; fxGo(i);
     $('#fmT').textContent = f.n; $('#fmD').textContent = 'Формат: ' + f.d + '.';
     $('#fmTop').style.backgroundImage = 'url(' + foodSrc(f.f) + ')';
     $('#fmL').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
-    var go = $('#fmGo'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити: ' + f.n.toLowerCase();
+    $('#fmPrice').dataset.price = i;
+    var go = $('#fmGo'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
     openM($('#fmtModal'), '#fmGo');
   }
   var fxNarrow = matchMedia('(max-width:900px)');
@@ -2015,6 +2072,24 @@ html.fscroll .who .flip-in{transition:none}
   $('#fxPrev').addEventListener('click', function () { fxGo(fxI - 1); });
   $('#fxNext').addEventListener('click', function () { fxGo(fxI + 1); });
   FX.forEach(function (f) { var im = new Image(); im.src = foodSrc(f.f); });
+
+  /* ---------- вікно «Скільки коштує»: ціни у вікні, після закриття сторінка там само ---------- */
+  (function () {
+    var pm = $('#priceM'); if (!pm) return;
+    var pt = 1;
+    function draw() {
+      $('#pmAreas').innerHTML = TIERS.map(function (t, i) { return '<button class="area" type="button" data-t="' + i + '" aria-pressed="' + (i === pt) + '">' + t[0] + '</button>'; }).join('');
+      $('#pmWork').textContent = '$' + fmt(TIERS[pt][1]); $('#pmInv').textContent = '$' + TIERS[pt][2];
+    }
+    $('#pmAreas').addEventListener('click', function (e) { var b = e.target.closest('[data-t]'); if (b) { pt = +b.dataset.t; draw(); var a = $('[data-t="' + pt + '"]', pm); if (a) a.focus(); } });
+    function openPrice(i) {
+      var f = FX[i];
+      $('#pmT').innerHTML = f ? 'Скільки коштує відкрити <em>' + f.acc + '</em>' : 'Скільки коштує <em>відкриття</em>';
+      $$('[data-format]', pm).forEach(function (b) { b.dataset.format = f ? f.n : ''; });
+      draw(); openM(pm, '.area[aria-pressed="true"]');
+    }
+    document.addEventListener('click', function (e) { var t = e.target.closest('[data-price]'); if (t) { e.preventDefault(); openPrice(t.dataset.price === '' ? -1 : +t.dataset.price); } });
+  })();
 
   /* ---------- квіз «скільки коштуватиме ваш заклад»: 5 питань → орієнтовний кошторис → контакти ---------- */
   (function () {
