@@ -695,6 +695,10 @@ html.mo .rv.out{animation:rvOut .5s cubic-bezier(.4,0,.6,1) backwards}
 .flip.rv,.pj.rv,.pt.rv,.fi.rv,.qa.rv,.fact.rv,.skills.rv,.sgrp.rv{--ry:30px;--rs:.95}
 .v-anim{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;pointer-events:none}
 
+/* картки «для кого»: напис зверху, картинка під ним */
+.face.front .wc-art{flex:1 1 0;height:auto;min-height:170px;margin:2px -28px 0;padding:4px 14px 0}
+@media (min-width:901px){.face.front h3{min-height:3em}}
+
 /* ================= ТЕЛЕФОН І ПЛАНШЕТ: окреме доопрацювання ================= */
 @media (pointer:coarse){.hint .m{display:none}.hint .t{display:inline}}
 html.touch .hint .m{display:none}html.touch .hint .t{display:inline}
@@ -740,7 +744,7 @@ html.touch .hint .m{display:none}html.touch .hint .t{display:inline}
   .hx-stats b{font-size:clamp(23px,7.2vw,30px)}
   .hx-stats div>span{font-size:13px;max-width:12ch}
   /* картки «для кого» нижчі */
-  .wc-art{height:200px;margin-top:-26px}
+  .face.front .wc-art{min-height:190px}
   /* площа приміщення: чотири кнопки в один рядок */
   .areas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
   .area{padding:11px 2px;font-size:13.5px;text-align:center;white-space:nowrap}
@@ -778,7 +782,7 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
 </style>
 </head>
 <body>
-<script>try{var d=document.documentElement;d.classList.add('mo');try{if(sessionStorage.getItem('intro2')!=='1')d.classList.add('intro-on')}catch(e){d.classList.add('intro-on')}setTimeout(function(){if(!window.__rvOk)d.classList.remove('mo')},6000)}catch(e){}</script>
+<script>try{var d=document.documentElement;d.classList.add('mo');if(!window.__skipIntro)d.classList.add('intro-on');try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}try{if(location.hash&&!/^#(privacy|oferta)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search)}catch(e){}setTimeout(function(){if(!window.__rvOk)d.classList.remove('mo')},6000)}catch(e){}</script>
 
 
 <div class="intro" id="intro" aria-hidden="true">
@@ -846,9 +850,9 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
       <article class="flip rv" tabindex="0" aria-label="Підприємцям, які хочуть у ресторанний бізнес">
         <div class="flip-in">
           <div class="face front">
-            <div class="wc-art"><svg id="sc1" aria-hidden="true"></svg></div>
             <span class="tag">Немає досвіду</span>
             <h3>Підприємцям, які хочуть у ресторанний бізнес</h3>
+            <div class="wc-art"><svg id="sc1" aria-hidden="true"></svg></div>
             <span class="hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span class="m">Наведіть, щоб дізнатися більше</span><span class="t">Натисніть, щоб дізнатися більше</span><span class="s">Гортайте — картка перевернеться</span></span>
           </div>
           <div class="face back">
@@ -862,9 +866,9 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
       <article class="flip rv" tabindex="0" aria-label="Власникам приміщень">
         <div class="flip-in">
           <div class="face front">
-            <div class="wc-art"><svg id="sc2" aria-hidden="true"></svg></div>
             <span class="tag">Є приміщення</span>
             <h3>Власникам приміщень</h3>
+            <div class="wc-art"><svg id="sc2" aria-hidden="true"></svg></div>
             <span class="hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span class="m">Наведіть, щоб дізнатися більше</span><span class="t">Натисніть, щоб дізнатися більше</span><span class="s">Гортайте — картка перевернеться</span></span>
           </div>
           <div class="face back">
@@ -878,9 +882,9 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
       <article class="flip rv" tabindex="0" aria-label="Власникам, яким потрібен перезапуск">
         <div class="flip-in">
           <div class="face front">
-            <div class="wc-art"><svg id="sc3" aria-hidden="true"></svg></div>
             <span class="tag">Заклад уже працює</span>
             <h3>Власникам, яким потрібен перезапуск</h3>
+            <div class="wc-art"><svg id="sc3" aria-hidden="true"></svg></div>
             <span class="hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span class="m">Наведіть, щоб дізнатися більше</span><span class="t">Натисніть, щоб дізнатися більше</span><span class="s">Гортайте — картка перевернеться</span></span>
           </div>
           <div class="face back">
@@ -930,7 +934,7 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
     </div>
     <div class="track" id="track">
       <figure class="pj rv" data-venue="greystone"><img src="img/greystone.jpg" alt="Ресторан Grey Stone ввечері" loading="lazy"><figcaption><span class="ptag">Ресторан</span><h3>Grey Stone</h3><p>Софіївська Борщагівка</p></figcaption></figure>
-      <figure class="pj rv" data-venue="gsp"><img src="img/gsp.jpg" alt="Заклад «Готові страви поруч»" loading="lazy"><figcaption><span class="ptag">Кулінарія</span><h3>Готові страви поруч</h3><p>корисні домашні страви</p></figcaption></figure>
+      <figure class="pj rv" data-venue="gsp"><img src="img/gsp.jpg" style="object-position:80% 50%" alt="Заклад «Готові страви поруч»" loading="lazy"><figcaption><span class="ptag">Кулінарія</span><h3>Готові страви поруч</h3><p>корисні домашні страви</p></figcaption></figure>
       <figure class="pj rv" data-venue="eatit"><img src="img/eatit.jpg" alt="Кафе Eat it" loading="lazy"><figcaption><span class="ptag">Кафе при ЖК</span><h3>Eat it</h3><p>молодіжний формат</p></figcaption></figure>
       <figure class="pj rv" data-venue="redcat"><img src="img/redcat.webp" alt="Пивний бар Red Cat Pub у фудкорті, команда за стійкою" loading="lazy"><figcaption><span class="ptag">Паб</span><h3>Red Cat Pub</h3><p>пивний бар у фудкорті</p></figcaption></figure>
     </div>
@@ -1375,11 +1379,17 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
   $$('a[data-soc="tt"]').forEach(function (a) { a.href = TIKTOK; });
 
 
-  /* ---------- заставка: логотип і червона риска, раз за сесію ---------- */
+  /* ---------- після перезавантаження — завжди перший екран ---------- */
+  (function () {
+    function top() { if (!/^#(privacy|oferta)$/.test(location.hash)) window.scrollTo(0, 0); }
+    top(); window.addEventListener('load', top, { once: true });
+    window.addEventListener('pagehide', function () { if ('scrollRestoration' in history) window.scrollTo(0, 0); });
+  })();
+
+  /* ---------- заставка: логотип і червона риска при кожному відкритті сторінки ---------- */
   (function () {
     var root = document.documentElement, el = $('#intro');
     if (!root.classList.contains('intro-on')) { el.remove(); return; }
-    try { sessionStorage.setItem('intro2', '1'); } catch (err) {}
     var t0 = Date.now(), go = function () {
       setTimeout(function () {
         root.classList.add('intro-done'); root.classList.remove('intro-on');
@@ -2041,6 +2051,9 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
 
   /* ---------- формати: ніші зверху, будинок і опис поруч; міняються лише за вибором людини ---------- */
   var fxI = -1, fxBox = $('#fxBld'), fxCard = $('#fxCard');
+  // яку частину фото показувати у вузькій смузі: каву й шаурму — верх, круасан — з мигдалем
+  var FPOS = { coffee: '50% 10%', street: '50% 20%', bakery: '50% 24%', burger: '50% 30%', dessert: '50% 28%' };
+  function fpos(k) { return FPOS[k] || '50% 50%'; }
   FX.forEach(function (f, i) {
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'bsvg'); svg.setAttribute('aria-hidden', 'true');
@@ -2059,7 +2072,7 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
     tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); });
     $('#fxName').textContent = f.n;
     $('#fxDesc').textContent = 'Формат: ' + f.d + '.';
-    $('#fxPh').style.backgroundImage = 'url(' + foodSrc(f.f) + ')';
+    $('#fxPh').style.backgroundImage = 'url(' + foodSrc(f.f) + ')'; $('#fxPh').style.backgroundPosition = fpos(f.f);
     $('#fxList').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
     $('#fxPrice').dataset.price = i;
     var go = $('#fxGoBtn'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
@@ -2073,7 +2086,7 @@ html.fscroll .who .flip-in{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
   function openFmt(i, fromTabs) {
     var f = FX[i]; fxGo(i);
     $('#fmT').textContent = f.n; $('#fmD').textContent = 'Формат: ' + f.d + '.';
-    $('#fmTop').style.backgroundImage = 'url(' + foodSrc(f.f) + ')';
+    $('#fmTop').style.backgroundImage = 'url(' + foodSrc(f.f) + ')'; $('#fmTop').style.backgroundPosition = fpos(f.f);
     $('#fmL').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
     $('#fmPrice').dataset.price = i;
     var go = $('#fmGo'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
