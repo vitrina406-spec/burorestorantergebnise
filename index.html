@@ -782,8 +782,8 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 .fx-tabs li:last-child .fxt{justify-content:center;border-style:dashed}
 .fx-bld.other::before{content:"?";position:absolute;z-index:3;top:4%;right:6%;width:64px;height:64px;border-radius:50%;background:var(--red);color:#fff;font:900 42px/64px var(--fd);text-align:center;box-shadow:0 14px 34px rgba(226,50,29,.45);animation:qBob 2.2s ease-in-out infinite;pointer-events:none}
 @keyframes qBob{50%{transform:translateY(-8px) rotate(6deg)}}
-.qz-dlg .qz-tiles .tile:last-child{grid-column:1/-1;aspect-ratio:auto;min-height:76px}
-#tiles .tile:last-child{grid-column:1/-1;aspect-ratio:auto;min-height:70px}
+.qz-dlg .qz-tiles .tile:last-child{grid-column:1/-1;aspect-ratio:auto;min-height:76px;background-image:url(img/food/other-wide.webp)!important}
+#tiles .tile:last-child{grid-column:1/-1;aspect-ratio:auto;min-height:70px;background-image:url(img/food/other-wide.webp)!important}
 /* ---------- запис, Telegram і підвал — один блок ---------- */
 .tgc{display:grid;gap:12px;margin-top:30px;padding:18px 20px 20px;border-radius:22px;background:#17202A;border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 60px rgba(0,0,0,.35)}
 .tgc-h{display:flex;align-items:center;gap:12px}
@@ -1767,7 +1767,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
     { n: 'Dark kitchen', acc: 'dark kitchen', d: 'кухня лише для доставки, без залу', f: 'darkkitchen', b: bDark, p: ['Кухня тільки під доставку: мінімум площі й ремонту', 'Меню під сервіси доставки', 'Упаковка й зона видачі кур’єрам'] },
     { n: 'Кафе при ЖК', acc: 'кафе в ЖК', d: 'щоденний формат для мешканців', f: 'cafe', b: bZhk, p: ['Формат під мешканців: сніданки, кава, страви на щодень', 'Планування кухні й залу на першому поверсі', 'Меню, техкарти й команда'] },
     { n: 'Ресторан або паб', acc: 'ресторан', d: 'повна кухня, бар і зал', f: 'pub', b: bResto, p: ['Повна кухня, бар і зал «від А до Я»', 'Меню й барна карта, техкарти', 'Найм і навчання кухні й залу'] },
-    { n: 'Інший заклад', acc: 'ваш заклад', d: 'будь-яка ваша ідея: гастробар, їдальня, кейтеринг, фудкорт чи щось зовсім нове', f: 'other', b: null, p: ['Розберемо вашу ідею й підберемо формат під локацію та бюджет', 'Концепція, меню й техкарти саме під ваш заклад', 'Планування, обладнання, команда й запуск під ключ'] },
+    { n: 'Інший заклад', acc: 'ваш заклад', d: 'будь-яка ваша ідея: пельменна, чебуречна, млинцева, гастробар чи щось зовсім нове', f: 'other', b: null, p: ['Розберемо вашу ідею й підберемо формат під локацію та бюджет', 'Концепція, меню й техкарти саме під ваш заклад', 'Планування, обладнання, команда й запуск під ключ'] },
   ];
 
   /* ---------- сценки для блоку «Для кого» ---------- */
@@ -2078,6 +2078,8 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   // яку частину фото показувати у вузькій смузі: каву й шаурму — верх, круасан — з мигдалем
   var FPOS = { coffee: '50% 10%', street: '50% 30%', bakery: '50% 36%', burger: '50% 44%', dessert: '50% 28%' };
   function fpos(k) { return FPOS[k] || '50% 50%'; }
+  // для широкої смуги «Іншого закладу» — окреме фото: пельмені, чебуреки й млинці поруч
+  function wideSrc(k) { return k === 'other' ? 'img/food/other-wide.webp' : foodSrc(k); }
   FX.forEach(function (f, i) {
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'bsvg'); svg.setAttribute('aria-hidden', 'true');
@@ -2100,7 +2102,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
     tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); });
     $('#fxName').textContent = f.n;
     $('#fxDesc').textContent = 'Формат: ' + f.d + '.';
-    $('#fxPh').style.backgroundImage = 'url(' + foodSrc(f.f) + ')'; $('#fxPh').style.backgroundPosition = fpos(f.f);
+    $('#fxPh').style.backgroundImage = 'url(' + wideSrc(f.f) + ')'; $('#fxPh').style.backgroundPosition = fpos(f.f);
     $('#fxList').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
     $('#fxPrice').dataset.price = i;
     var go = $('#fxGoBtn'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
@@ -2114,7 +2116,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   function openFmt(i, fromTabs) {
     var f = FX[i]; fxGo(i);
     $('#fmT').textContent = f.n; $('#fmD').textContent = 'Формат: ' + f.d + '.';
-    $('#fmTop').style.backgroundImage = 'url(' + foodSrc(f.f) + ')'; $('#fmTop').style.backgroundPosition = fpos(f.f);
+    $('#fmTop').style.backgroundImage = 'url(' + wideSrc(f.f) + ')'; $('#fmTop').style.backgroundPosition = fpos(f.f);
     $('#fmL').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
     $('#fmPrice').dataset.price = i;
     var go = $('#fmGo'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
@@ -2130,7 +2132,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   });
   $('#fxPrev').addEventListener('click', function () { fxGo(fxI - 1); });
   $('#fxNext').addEventListener('click', function () { fxGo(fxI + 1); });
-  FX.forEach(function (f) { var im = new Image(); im.src = foodSrc(f.f); });
+  FX.forEach(function (f) { var im = new Image(); im.src = wideSrc(f.f); });
 
   /* ---------- вікно «Скільки коштує»: ціни у вікні, після закриття сторінка там само ---------- */
   (function () {
