@@ -455,6 +455,9 @@ html.mo .fi.rv:not(.in) s::after{transform:scaleX(0)}
 .qz-est b{font:900 clamp(28px,3.4vw,40px)/1 var(--fd);white-space:nowrap}
 .qz-note{margin:12px 0 0;font-size:14.5px;line-height:1.5;color:var(--mute)}
 .pm-dlg{max-width:620px}
+.pm-back{justify-self:start;margin:-8px 0 -6px}
+.qz-known{margin:0;padding:10px 14px;border-radius:12px;background:rgba(226,50,29,.12);font:500 14.5px/1.4 var(--fb);color:#D9CFC4}
+.qz-known b{color:var(--text);font-weight:700}
 .pm-in{padding:clamp(26px,4vw,40px);display:grid;gap:16px}
 .pm-in h2{margin:0;padding-right:46px;font:900 clamp(32px,4vw,48px)/1 var(--fd);text-transform:uppercase;text-wrap:balance}
 .pm-in h2 em{font-style:normal;color:var(--red)}
@@ -1170,7 +1173,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
         <div class="fld"><label for="mName">Ваше ім’я</label><input id="mName" name="name" autocomplete="name" placeholder="Наприклад, Олена" required></div>
         <div class="fld"><label for="mPhone">Телефон</label><input id="mPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 XX XXX XX XX" required></div>
         <div class="fld"><span>Як зручніше зв’язатися</span><div class="ways" data-ways="m"></div></div>
-        <input type="hidden" name="format" id="mFormat">
+        <input type="hidden" name="format" id="mFormat"><input type="hidden" name="area" id="mArea">
         <label class="agree"><input type="checkbox" checked required id="mAgree"><span>Погоджуюсь з обробкою персональних даних згідно з <a href="#privacy" data-doc="privacy">політикою конфіденційності</a></span></label>
         <button class="btn" type="submit">Записатися<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button>
       </form>
@@ -1185,6 +1188,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
     <button class="dlg-x" type="button" data-close aria-label="Закрити"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="qz-top">
       <h2 id="qzT">Скільки коштуватиме <em>ваш заклад</em></h2>
+      <p class="qz-known" id="qzK" hidden></p>
       <div class="qz-meta"><span id="qzN">Питання 1 з 5</span><button class="qz-back" type="button" id="qzBack">← Назад</button></div>
       <div class="qz-bar"><i id="qzBar"></i></div>
     </div>
@@ -1213,6 +1217,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   <div class="dialog pm-dlg" role="dialog" aria-modal="true" aria-labelledby="pmT">
     <button class="dlg-x" type="button" data-close aria-label="Закрити"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="pm-in">
+      <button class="qz-back pm-back" type="button" id="pmBack" hidden>← Назад</button>
       <h2 id="pmT">Скільки коштує <em>відкриття</em></h2>
       <p class="pm-sub">Оберіть площу приміщення — покажемо попередні ціни.</p>
       <div class="areas pm-areas" id="pmAreas" role="group" aria-label="Площа приміщення"></div>
@@ -1221,7 +1226,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
         <div><span>Середні інвестиції</span><b id="pmInv">$15 000–25 000</b><small>ремонт, обладнання, запуск</small></div>
       </div>
       <p class="qz-note">Ціни попередні. Площа понад 80 м² або кілька точок одразу — рахуємо індивідуально.</p>
-      <div class="fm-cta"><button class="btn" type="button" data-quiz data-format="">Порахувати точно<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><button class="link" type="button" data-consult data-format="">Обговорити з шефом<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+      <div class="fm-cta"><button class="btn" type="button" data-quiz data-format="" data-area="" id="pmQuiz">Отримати точний кошторис<i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button><button class="link" type="button" data-consult data-format="" data-area="" id="pmConsult">Обговорити з шефом<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
     </div>
   </div>
 </div>
@@ -1890,23 +1895,23 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   var consult = $('#consult'), s1 = $('#cStep1'), s2 = $('#cStep2');
   var TILES = [['Кав’ярня', 'coffee'], ['Піцерія', 'pizza'], ['Суші', 'sushi'], ['Бургерна чи стрітфуд', 'burger'], ['Пекарня чи кондитерська', 'bakery'], ['Кафе чи ресторан', 'pub'], ['Інший заклад', 'other']];
   $('#tiles').innerHTML = TILES.map(function (t) { return '<button class="tile" type="button" data-pick="' + t[0] + '" style="background-image:url(' + foodSrc(t[1]) + ')"><span>' + t[0] + '</span></button>'; }).join('');
-  function step(n, format) {
+  function step(n, format, area) {
     s1.hidden = n !== 1; s2.hidden = n !== 2;
     if (n === 2) {
-      $('#mFormat').value = format || '';
-      var pk = $('#cPicked'); pk.hidden = !format; pk.textContent = format ? 'Формат: ' + format : '';
+      $('#mFormat').value = format || ''; $('#mArea').value = area || '';
+      var pk = $('#cPicked'); pk.hidden = !format; pk.textContent = format ? 'Формат: ' + format + (area ? ' · ' + area : '') : '';
       setTimeout(function () { var nm = $('#mName'); if (nm) nm.focus(); }, 80);
     }
   }
-  function openConsult(format) {
+  function openConsult(format, area) {
     closeAll(consult);
     if (!consult.hidden) return;
-    if (format) step(2, format); else step(1);
+    if (format) step(2, format, area); else step(1);
     openM(consult, format ? '#mName' : '.tile');
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-consult]');
-    if (t) { e.preventDefault(); closeMenu(); openConsult(t.dataset.format || ''); return; }
+    if (t) { e.preventDefault(); closeMenu(); openConsult(t.dataset.format || '', t.dataset.area || ''); return; }
     var a = e.target.closest('[data-about]');
     if (a) { e.preventDefault(); openM($('#about')); }
   });
@@ -2120,7 +2125,9 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
     $('#fmL').innerHTML = f.p.concat(['Прорахунок вкладень і окупності саме для вашої локації', 'Місяць супроводу після відкриття']).map(function (t) { return '<li>' + CHECK + t + '</li>'; }).join('');
     $('#fmPrice').dataset.price = i;
     var go = $('#fmGo'); go.dataset.format = f.n; go.firstChild.textContent = 'Обговорити ' + f.acc;
-    openM($('#fmtModal'), '#fmGo');
+    closeAll($('#fmtModal')); openM($('#fmtModal'), '#fmGo');
+  }
+  window.__openFmt = function (i) { openFmt(i);
   }
   var fxNarrow = matchMedia('(max-width:900px)');
   // на вузькому екрані опис не стоїть поруч із будинком, тому ніша відкриває вікно з описом
@@ -2137,19 +2144,23 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   /* ---------- вікно «Скільки коштує»: ціни у вікні, після закриття сторінка там само ---------- */
   (function () {
     var pm = $('#priceM'); if (!pm) return;
-    var pt = 1;
+    var pt = 1, pFrom = -1;
     function draw() {
       $('#pmAreas').innerHTML = TIERS.map(function (t, i) { return '<button class="area" type="button" data-t="' + i + '" aria-pressed="' + (i === pt) + '">' + t[0] + '</button>'; }).join('');
       $('#pmWork').textContent = '$' + fmt(TIERS[pt][1]); $('#pmInv').textContent = '$' + TIERS[pt][2];
+      $('#pmQuiz').dataset.area = TIERS[pt][0]; $('#pmConsult').dataset.area = TIERS[pt][0];
     }
     $('#pmAreas').addEventListener('click', function (e) { var b = e.target.closest('[data-t]'); if (b) { pt = +b.dataset.t; draw(); var a = $('[data-t="' + pt + '"]', pm); if (a) a.focus(); } });
-    function openPrice(i) {
-      var f = FX[i];
+    function openPrice(i, back) {
+      var f = FX[i]; pFrom = back ? i : -1;
+      closeAll(pm);                       // одне вікно за раз: ціни замінюють вікно формату, а не лягають зверху
+      $('#pmBack').hidden = pFrom < 0; if (f) $('#pmBack').textContent = '← ' + f.n;
       $('#pmT').innerHTML = f ? 'Скільки коштує відкрити <em>' + f.acc + '</em>' : 'Скільки коштує <em>відкриття</em>';
       $$('[data-format]', pm).forEach(function (b) { b.dataset.format = f ? f.n : ''; });
       draw(); openM(pm, '.area[aria-pressed="true"]');
     }
-    document.addEventListener('click', function (e) { var t = e.target.closest('[data-price]'); if (t) { e.preventDefault(); openPrice(t.dataset.price === '' ? -1 : +t.dataset.price); } });
+    document.addEventListener('click', function (e) { var t = e.target.closest('[data-price]'); if (t) { e.preventDefault(); openPrice(t.dataset.price === '' ? -1 : +t.dataset.price, !!t.closest('#fmtModal')); } });
+    $('#pmBack').addEventListener('click', function () { if (pFrom >= 0 && window.__openFmt) { var i = pFrom; closeM(pm); window.__openFmt(i); } });
   })();
 
   /* ---------- квіз «скільки коштуватиме ваш заклад»: 5 питань → орієнтовний кошторис → контакти ---------- */
@@ -2162,12 +2173,12 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
       { k: 'when', t: 'Коли хочете відкритися?', o: ['Якнайшвидше', 'За 2–3 місяці', 'За пів року', 'Поки вивчаю'] },
       { k: 'budget', t: 'Скільки готові вкласти в запуск?', o: ['До $15 000', '$15 000–30 000', '$30 000–60 000', 'Понад $60 000', 'Ще не знаю'] }
     ];
-    var ans = {}, cur = 0, qEl = $('#qzQ'), res = $('#qzRes'), back = $('#qzBack');
+    var ans = {}, cur = 0, seq = [0, 1, 2, 3, 4], qEl = $('#qzQ'), res = $('#qzRes'), back = $('#qzBack');
     function bar(p) { $('#qzBar').style.width = (p * 100).toFixed(0) + '%'; }
     function render() {
-      var q = Q[cur];
-      $('#qzN').textContent = 'Питання ' + (cur + 1) + ' з ' + Q.length; bar(cur / Q.length);
-      back.hidden = cur === 0; qEl.hidden = false; res.hidden = true;
+      var q = Q[seq[cur]];
+      $('#qzN').textContent = 'Питання ' + (cur + 1) + ' з ' + seq.length; bar(cur / seq.length);
+      back.hidden = cur === 0; qEl.hidden = false; res.hidden = true; $('#qzK').hidden = !$('#qzK').innerHTML;
       qEl.innerHTML = '<h3>' + q.t + '</h3><div class="' + (q.tiles ? 'tiles qz-tiles' : 'qz-opts') + '">' + q.o.map(function (o, i) {
         var lab = q.tiles ? o[0] : o, on = ans[q.k] === lab;
         return q.tiles ? '<button type="button" class="tile" data-i="' + i + '" aria-pressed="' + on + '" style="background-image:url(' + o[1] + ')"><span>' + lab + '</span></button>'
@@ -2185,22 +2196,32 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
       $('#qzWork').textContent = work; $('#qzInv').textContent = inv; $('#qzNote').textContent = note;
       $('#qzF').value = ans.format || ''; $('#qzA').value = ans.area || ''; $('#qzC').value = ans.city || ''; $('#qzW').value = ans.when || ''; $('#qzB').value = ans.budget || '';
       $('#qzE').value = 'Робота шефа: ' + work + '; інвестиції: ' + inv;
-      $('#qzN').textContent = 'Ваш орієнтовний кошторис'; bar(1); back.hidden = false;
+      $('#qzN').textContent = 'Ваш орієнтовний кошторис'; bar(1); back.hidden = false; $('#qzK').hidden = true;
       qEl.hidden = true; res.hidden = false; res.classList.remove('sw'); void res.offsetWidth; res.classList.add('sw');
       var dl = $('.dialog', qz); if (dl) dl.scrollTop = 0;
     }
     qEl.addEventListener('click', function (e) {
       var b = e.target.closest('[data-i]'); if (!b) return;
-      var q = Q[cur], o = q.o[+b.dataset.i]; ans[q.k] = q.tiles ? o[0] : o; b.setAttribute('aria-pressed', 'true');
-      setTimeout(function () { cur++; if (cur < Q.length) render(); else result(); }, 230);
+      var q = Q[seq[cur]], o = q.o[+b.dataset.i]; ans[q.k] = q.tiles ? o[0] : o; b.setAttribute('aria-pressed', 'true');
+      setTimeout(function () { cur++; if (cur < seq.length) render(); else result(); }, 230);
     });
-    back.addEventListener('click', function () { if (!res.hidden) { cur = Q.length - 1; render(); } else if (cur > 0) { cur--; render(); } });
-    function openQuiz(fmtName) {
+    back.addEventListener('click', function () { if (!res.hidden) { cur = seq.length - 1; render(); } else if (cur > 0) { cur--; render(); } });
+    function openQuiz(fmtName, area) {
       closeAll(qz); ans = {}; cur = 0;
-      if (fmtName) { ans.format = fmtName; cur = 1; }
+      if (fmtName) ans.format = fmtName;
+      if (area) ans.area = area;
+      seq = [0, 1, 2, 3, 4].filter(function (k) { return !ans[Q[k].k]; });
+      var known = [ans.format, ans.area].filter(Boolean), kn = $('#qzK');
+      kn.hidden = !known.length; kn.innerHTML = known.length ? 'Уже знаємо: <b>' + known.join(' · ') + '</b>. Залишилось ' + seq.length + ' ' + (seq.length < 5 ? 'питання' : 'питань') + '.' : '';
       render(); openM(qz, '.qz-opt, .tile');
     }
-    document.addEventListener('click', function (e) { var t = e.target.closest('[data-quiz]'); if (t) { e.preventDefault(); closeMenu(); openQuiz(t.dataset.format || ''); } });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-quiz]'); if (!t) return;
+      e.preventDefault(); closeMenu();
+      var area = t.dataset.area || '';
+      if (!area && t.closest('#price')) { var a = $('#areas [aria-pressed="true"]'); if (a) area = a.textContent.trim(); }   // площа, обрана в блоці цін
+      openQuiz(t.dataset.format || '', area);
+    });
   })();
 
   /* ---------- слово шефа: слова засвічуються одне за одним під час гортання ---------- */
